@@ -1,0 +1,81 @@
+Quesn 1.
+vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
+        vector<vector<int>> ans(m,vector<int> (n));
+        if(original.size()!=m*n) return {};
+        int k=0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++) ans[i][j]=original[k++];
+        }
+        return ans;
+    }
+
+
+Quesn 5.
+int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
+        sort(arr2.begin(),arr2.end());
+        int cnt=0;
+        for(int i=0;i<arr1.size();i++){
+            int l=0,h=arr2.size()-1,m;
+            bool flag=false;
+            while(l<=h){
+                m=l+(h-l)/2;
+                if(abs(arr2[m]-arr1[i])<=d){
+                    flag=true;
+                    break;
+                }
+                else if(arr2[m]>arr1[i]) h=m-1;
+                else l=m+1;
+            }
+            if(!flag) cnt++;
+        }
+        return cnt;
+    }
+
+
+
+Quesn  6.
+vector<int> findDuplicates(vector<int>& nums) {
+        vector<int> ans;
+        for(int i=0;i<nums.size();i++){
+            int idx = abs(nums[i])-1;
+            if(nums[idx]<0) ans.push_back(idx+1);
+            else nums[idx] *=-1;
+        }
+        return ans;
+    }
+
+
+Quesn 7.
+int findMin(vector<int>& nums) {
+        int low=0,high=nums.size()-1;
+        if(high<1) return nums[0];
+        if(nums[high]>nums[0]) return nums[0];
+        while(low<high){
+            int mid = low + (high-low)/2;
+            if(nums[mid]>=nums[0]) low=mid+1;
+            else high=mid;
+        }
+        return nums[low];
+    }
+
+
+
+Quesn 8.
+vector<int> findOriginalArray(vector<int>& changed) {
+        if(changed.size()&1)return {};
+        sort(changed.begin(), changed.end());
+        vector<int>ans;
+        unordered_map<int, int>m;
+        for(int i=0; i<changed.size(); i++) m[changed[i]]++;
+        for(int i=0; i<changed.size(); i++){
+            if(m[changed[i]]==0)continue;
+            m[changed[i]]--;
+            if(m[changed[i]*2]==0) return {};
+            m[changed[i]*2]--;
+            ans.push_back(changed[i]);
+        }
+        return ans;
+    }
+
+
+
